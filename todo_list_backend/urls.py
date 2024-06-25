@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', LoginView.as_view()),
     path('todos/', TodoItemView.as_view()),
+    path('todos/<int:pk>/', TodoItemView.as_view(), name='todo-detail'),
 ]

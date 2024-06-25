@@ -19,6 +19,7 @@ class Todolist(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     priority = models.CharField(max_length=6, choices = PRIORITY_CHOICES, default = MEDIUM)
     dateline = models.DateField(null=True, blank=True)
+    state = models.CharField(max_length=30, null=True, blank=True)
     
     def __str__(self):
         return f'{self.id} {self.title}'
