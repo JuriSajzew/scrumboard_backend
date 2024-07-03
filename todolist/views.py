@@ -1,18 +1,19 @@
 from django.http import Http404
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from todolist.models import Todolist
 from todolist.serializers import TodoItemSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class TodoItemView(APIView):
-    #authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = []
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
     def get_object(self, pk):
         try:
