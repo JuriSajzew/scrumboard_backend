@@ -23,3 +23,36 @@ class Todolist(models.Model):
     
     def __str__(self):
         return f'{self.id} {self.title}'
+
+from django.contrib.auth.models import BaseUserManager
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import Group, Permission
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    # Hier werden die related_names gesetzt, um die Konflikte zu lösen
+    groups = models.ManyToManyField(Group, blank=True, related_name='customuser_set', verbose_name='groups')
+    user_permissions = models.ManyToManyField(Permission, blank=True, related_name='customuser_set', verbose_name='user permissions')
+
+    def __str__(self):
+        return self.email
