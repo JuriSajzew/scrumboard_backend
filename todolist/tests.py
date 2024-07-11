@@ -59,12 +59,6 @@ class TestTodolist(TestCase):
         data = {'title': 'Test Todo', 'description':'Test description', 'author':'1'}
         response = self.client.post(reverse('todo-list'), data, format='json')      
         self.assertEqual(response.status_code, 201)
-        
-    #def test_patch_todo(self):
-    #    self.client.login(username='testuser', password='testpassword')
-    #    data = {'title': 'Test Todo1', 'description':'Test description', 'author':'1'}
-    #    response = self.client.patch(f'todos/{self.todo1}/', data, format='json')
-    #    self.assertEqual(response.status_code, 200)
     
     def test_patch_todo(self):
         data = {'title': 'Test Todo1', 'description': 'Test description'}

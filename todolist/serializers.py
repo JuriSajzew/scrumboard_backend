@@ -9,7 +9,7 @@ class TodoItemSerializer(serializers.ModelSerializer):
 from django.contrib.auth import get_user_model        
 class UserItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model()  # Verwenden Sie get_user_model(), um das aktuelle Benutzermodell zu erhalten
+        model = get_user_model()
         fields = ('username', 'password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
 
